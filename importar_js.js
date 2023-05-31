@@ -3,3 +3,5 @@ async function getJson(){
     const datos = await res.json()
     console.log(datos)
 } 
+
+getJson()
