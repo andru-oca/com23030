@@ -1,131 +1,109 @@
+class _Vehiculo_:
 
-# _HERENCIA
-
-
-class _Persona_:
-    piernas:bool = True
-
-    def saludo():
+    def on(self):
         pass
 
-class Padre(_Persona_):
-    def __init__(self, nombre , color_ojos):
-        self.nombre = nombre
-        self.color_ojos = color_ojos
+    def off(self):
+        pass
 
 
-    def saludo(self):
-        return "Hola!! como vas?"
+
+#HERENCIA
 
 
-class Madre:
-    ganas_de_formar_familia = True
-
-    def __init__(self,baila:bool):
-        self.baila =baila
-
-    def cocinar_rico(self):
-        return "se cocinar excelente un pastel de papas!"
-
-class HijoMenor(Padre,Madre):
-
-    def __init__(self,nombre , color_ojos,altura,baila=False):
-        Padre.__init__(self, nombre , color_ojos)
-        Madre.__init__(self, baila)
-        self.altura = altura
-
-    def saludo(self):
-        return "YO SALUDO GRITANDO!!!"
+class Remolque:
+    def aguanta(self):
+        print("si sr, aguanto")
 
 
-class Hijo(Padre,Madre):
-    __cuenta_bancaria:str
+class PropiedasCoche(_Vehiculo_):
+    status = False
 
-    def __init__(self,nombre , color_ojos,altura,baila=False):
-        Padre.__init__(self, nombre , color_ojos)
-        Madre.__init__(self, baila)
-        self.altura = altura
+    def on(self):
+        print(f"el motor {self.motor} prendido")
+        self.status = True
 
+    def off(self):
+        print(f"el motor {self.motor} esta apagado")
+        self.status = False
+
+    def  remolcar(self, remolque:Remolque):
+        remolque.aguanta()
+
+
+class PropiedasCocheIngles(_Vehiculo_):
+    status = True
+
+    def __init__(self,idioma = "ingles"):
+        self.idioma = idioma
+
+    def on(self):
+        print(f"IS ON MADAF")
+        self.status = True
+
+    def off(self):
+        print(f"SARAKATUNGA")
+        self.status = False
+
+
+
+class PremiumCar(PropiedasCocheIngles):
+    def __init__(self, calidad="Premium",idioma= "ingles"):
+        PropiedasCocheIngles.__init__(self, idioma )
+        self.idioma = idioma
+
+porsche = PremiumCar()
+porsche.on()
+porsche.off()
+
+# ENCAPSULAMIENTO
+class Auto(PropiedasCoche):
+
+
+    def __init__(self,motor:str, cant_ruedas:int):
+        self.motor = motor
+        self.cant_ruedas = cant_ruedas
+        self.__kms = 100
+
+    def kilometraje(self,medida):
+        if medida == "km":
+            print(f"{self.__kms} kms andados")
+        elif medida == "millas":
+            print(f"{self.__kms/1.61} millas")
+        else:
+            print("ni idea macho")
+
+    def set_kms(self,kms):
+        self.__kms += kms
     
-    def rebelde(self):
-        return "me gusta rbd"
 
-    # setear datos a los privados
-    def agrear_cuenta(self, cuenta_bancaria):
-        self.__cuenta_bancaria = cuenta_bancaria
-    # get datos a los privados
-    def mostrar_cuenta_bancaria(self):
-        return self.__cuenta_bancaria
-
-    
+volvo = Auto("v8", 4)
+volvo.kilometraje("km")
+volvo.set_kms(2000)
+volvo.kilometraje("km")
+print(volvo._Auto__kms)
 
 
-class Hija(Padre):
-    def __init__(self, nombre , color_ojos , coqueta):
-        Padre.__init__(self, nombre , color_ojos)
-        
-        self.coqueta =  coqueta
+volvo.on()
+volvo.off()
+print("****"*10)
+remo = Remolque()
+volvo.remolcar(remo)
 
 
-    def reparar(self):
-        return "puedo reparar todo"
+# def deco_zero(fn):
 
-    def carpinteria(self):
-        return "te armo un banquito"
-        
+#     def validador(a,b):
+#         if b==0:
+#             print("zappallo,como vas a dividir por zero???, a marzo")
+#             return
+#         else:
+#             return fn(a,b)
 
-martin = Hijo("martin","azules" , 1.75)
-benja= HijoMenor("benjamin","marron", 2.0,True)
+#     return validador
 
-cecilia = Hija("cecilia","gris",100)
+# @deco_zero
+# def division(a,b):
+#     return a/b
 
-print("soy martin")
-print(martin.rebelde())
-print(martin.saludo())
-
-print("#"*50)
-print(martin.cocinar_rico())
-print(martin.ganas_de_formar_familia)
-print(martin.baila)
-
-print("#"*50)
-print("soy cecilia")
-print( cecilia.reparar())
-print( cecilia.carpinteria())
-print( cecilia.saludo())
-
-
-print("#"*50)
-martin.agrear_cuenta(1123123123)
-# print(martin.mostrar_cuenta_bancaria())
-print(martin._Hijo__cuenta_bancaria)
-
-print("#"*50)
-print(benja.saludo())
-
-print(martin.piernas)
-
-
-
-
-# decorador
-
-
-def deco_zero(fn):
-    def analisis(a,b):
-        if b==0:
-            print("zapallo, como vas a divir por cero??")
-            return
-        return fn(a,b)
-    
-    return  analisis
-
-
-@deco_zero
-def division(a,b):
-    print(a/b)
-
-
-
-division(1,10)
-
+# print(division(20,2))
