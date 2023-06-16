@@ -2,12 +2,28 @@ from CRUD_CONN.python_con import crud
 from CRUD_CONN.data_protegida import  MYSQL_TABLE
 from CRUD_CONN.User import User
 
+def actualizar():
+    print("vamos a actualizar un usuario")
+    email = input("Ingresar email:\n")
+
+    print("Verifiquemos si el usuario existe")
+    if not crud.show_user(email):
+        pass
+        
+    print("Existe! vamos a actualizar sus datos")
+    data_cambiar = input("campo a cambiar:\n")
+    nuevo_valor = input("nuevo valor:\n")
+
+    crud.update_user(email,data_cambiar,nuevo_valor)
+
+
+
 def main():
 
     print("software para crear CRUD de USUARIOS")
 
     while True:
-        print("""
+        opcion = input("""
         elija una opcion para continuar
         1 -> crear usuario
         2 -> borrar usuario
@@ -15,8 +31,6 @@ def main():
         4 -> mostrar usuarios
         0 --> para salir
         """)
-
-        opcion = input("")
 
         if opcion == "0":
             print("Gracias por usar el software")
@@ -50,17 +64,7 @@ def main():
             crud.delete_user(email)
         
         if opcion == "3":
-            print("vamos a actualizar un usuario")
-            email = input("Ingresar email:\n")
-
-            print("Verifiquemos si el usuario existe")
-            if not crud.show_user(email):
-                continue
-            print("Existe! vamos a actualizar sus datos")
-            data_cambiar = input("campo a cambiar:\n")
-            nuevo_valor = input("nuevo valor:\n")
-
-            crud.update_user(email,data_cambiar,nuevo_valor)
+            actualizar()
 
         if opcion == "4" :
             print("Veamos todos los usuarios")

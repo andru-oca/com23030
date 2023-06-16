@@ -5,17 +5,22 @@ class InsertUser:
     def insert_user(self, user:User):
 
         self.cnx.cursor()
+        try:
+            query = f"""
+            INSERT INTO {self.db}.{self.table_name}
+            (nombre,email,password) 
+            VALUES
+            {user.returned_string()};
+            """
+            self.cursor.execute(query)
+            self.cnx.commit()
 
-        query = f"""
-        INSERT INTO {self.db}.{self.table_name}
-        (nombre,email,password) 
-        VALUES
-        {user.returned_string()};
-        """
-        self.cursor.execute(query)
-        self.cnx.commit()
+            print(f"Usuario {user.nombre} ha sido cargado en la base de datos")
 
-        print(f"Usuario {user.nombre} ha sido cargado en la base de datos")
+        except Exception as e:
+            print(f"El usuario {user.nombre} no ha sido creado!")
+            print("ERROR DETALLADO EN LA PARTE INFERIOR:")
+            print(e)
 
 
 class DeleteUser:
@@ -49,6 +54,7 @@ class ShowUsers:
             usuarios = self.cursor.fetchall()
 
             print(f"USUARIOS CARGADOS EN LA BASE DE DATOS {self.db} TABLA: {self.table_name}")
+
             for user in usuarios:
                 print(f"""
                         nombre : {user[1]}
