@@ -28,7 +28,6 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# Application definition
 
 APPS = [
     "vino_app"
@@ -50,7 +49,6 @@ INSTALLED_APPS = [
 
 INSTALLED_APPS += APPS
 INSTALLED_APPS += EXTERNALS
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
